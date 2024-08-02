@@ -1,7 +1,7 @@
 //import express
 const express = require('express')
 const books = express.Router()
-const { getAllBooks, getBookbyId, createBook, deleteBook } = require('../queries/books')
+const { getAllBooks, getBookbyId, createBook, deleteBook, updateBook } = require('../queries/books')
 
 //Index: locahost:3002/books
 books.get("/", async (req, res) => {
@@ -43,6 +43,18 @@ books.delete('/:id', async (req, res) => {
         }
     } catch (error) {
         console.error(`Error deleting book with id: ${id}`)
+    }
+});
+
+//Update: localhost:3002/books/id
+books.put("/:id", async (req, res) => {
+    const { id } = req.params
+    const updatedBook = await updateBook(id, req.body)
+    console.log(updatedBook)
+    if(updatedBook.id){
+        res.status(200).json(updatedBook)
+    } else {
+        res.status(404).json({ error: "Book Not Found" })
     }
 });
 

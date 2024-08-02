@@ -49,6 +49,28 @@ const deleteBook = async (id) => {
     }
 };
 
+const updateBook = async (id, book) => {
+    try {
+        const updatedBook = await db.one(
+            "UPDATE books SET title=$1, author=$2, genre=$3, year_published=$4, total_pages=$5, isbn=$6, is_favorite=$7, book_status=$8 WHERE id=$9 RETURNING *",
+            [
+                book.title,
+                book.author,
+                book.genre,
+                book.year_published,
+                book.total_pages,
+                book.isbn,
+                book.is_favorite,
+                book.book_status,
+                id,
+            ]
+        );
+        console.log(updatedBook);
+        return updatedBook;
+    } catch (error) {
+        return error;
+    }
+};
 
 
-module.exports = { getAllBooks, getBookbyId, createBook, deleteBook }
+module.exports = { getAllBooks, getBookbyId, createBook, deleteBook, updateBook }
