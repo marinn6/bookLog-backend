@@ -14,5 +14,6 @@ CREATE TABLE books (
     isbn VARCHAR(14),
     is_favorite BOOLEAN,
     book_status TEXT,
+    book_cover_img TEXT
     CONSTRAINT isbn_length CHECK (CHAR_LENGTH(isbn) = 11 OR CHAR_LENGTH(isbn) = 14)
 );
